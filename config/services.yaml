@@ -1,0 +1,17 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  _instanceof:
+    App\Shared\Domain\Bus\Command\CommandHandler:
+      tags: [ 'internal.command_handler' ]
+    App\Shared\Domain\Bus\Query\QueryHandler:
+      tags: ['internal.query_handler']
+
+  CommandBus:
+    class: App\Shared\Infrastructure\Bus\Command\InMemoryCommandBus
+    arguments: [ !tagged internal.command_handler ]
+  QueryBus:
+    class: App\Shared\Infrastructure\Bus\Query\InMemoryQueryBus
+    arguments: [ !tagged internal.query_handler ]

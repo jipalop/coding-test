@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Modules\Order\Domain;
 
 use App\Shared\Domain\CustomerId;
-use App\Types\Exception\InvalidOrderFormat;
 
 class Order
 {
@@ -27,9 +26,6 @@ class Order
         );
     }
 
-    /**
-     * @throws InvalidOrderFormat
-     */
     public static function fromJson(string $orderString): Order
     {
         $orderArray = json_decode($orderString, true);
