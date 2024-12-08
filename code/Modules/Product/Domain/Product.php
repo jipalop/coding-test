@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Product\Domain;
 
+use App\Shared\Domain\ProductId;
+use App\Shared\Domain\ProductPrice;
+
 class Product
 {
     private function __construct(

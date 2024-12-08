@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Customer\Domain;
 
+use App\Shared\Domain\CustomerId;
 use App\Types\Exception\InvalidDateTime;
 
 class Customer

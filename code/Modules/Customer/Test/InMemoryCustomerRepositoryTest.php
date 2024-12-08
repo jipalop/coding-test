@@ -3,9 +3,9 @@
 namespace App\Modules\Customer\Test;
 
 use App\Modules\Customer\Domain\Customer;
-use App\Modules\Customer\Domain\CustomerId;
 use App\Modules\Customer\Domain\CustomerNotExists;
 use App\Modules\Customer\Infrastructure\Persistence\InMemoryCustomerRepository;
+use App\Shared\Domain\CustomerId;
 use PHPUnit\Framework\TestCase;
 
 class InMemoryCustomerRepositoryTest extends TestCase

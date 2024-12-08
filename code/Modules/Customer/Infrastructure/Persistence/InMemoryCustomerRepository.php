@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Modules\Customer\Infrastructure\Persistence;
 
 use App\Modules\Customer\Domain\Customer;
-use App\Modules\Customer\Domain\CustomerId;
 use App\Modules\Customer\Domain\CustomerNotExists;
 use App\Modules\Customer\Domain\CustomerRepository;
+use App\Shared\Domain\CustomerId;
 use App\Types\Exception\InvalidDateTime;
 
 class InMemoryCustomerRepository implements CustomerRepository

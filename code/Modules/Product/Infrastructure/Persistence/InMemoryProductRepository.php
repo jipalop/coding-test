@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Modules\Product\Infrastructure\Persistence;
 
 use App\Modules\Product\Domain\Product;
-use App\Modules\Product\Domain\ProductId;
 use App\Modules\Product\Domain\ProductNotExists;
 use App\Modules\Product\Domain\ProductRepository;
+use App\Shared\Domain\ProductId;
 
 class InMemoryProductRepository implements ProductRepository
 {

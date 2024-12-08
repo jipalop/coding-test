@@ -3,9 +3,9 @@
 namespace App\Modules\Product\Test;
 
 use App\Modules\Product\Domain\Product;
-use App\Modules\Product\Domain\ProductId;
 use App\Modules\Product\Domain\ProductNotExists;
 use App\Modules\Product\Infrastructure\Persistence\InMemoryProductRepository;
+use App\Shared\Domain\ProductId;
 use PHPUnit\Framework\TestCase;
 
 class InMemoryProductRepositoryTest extends TestCase

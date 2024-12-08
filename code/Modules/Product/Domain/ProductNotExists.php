@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Product\Domain;
 
 use App\Exceptions\DomainException;
+use App\Shared\Domain\ProductId;
 
 final class ProductNotExists extends DomainException
 {

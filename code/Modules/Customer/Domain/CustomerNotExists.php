@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Customer\Domain;
 
 use App\Exceptions\DomainException;
+use App\Shared\Domain\CustomerId;
 
 final class CustomerNotExists extends DomainException
 {
