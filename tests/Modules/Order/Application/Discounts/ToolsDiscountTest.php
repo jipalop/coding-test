@@ -5,20 +5,20 @@ namespace App\Tests\Modules\Order\Application\Discounts;
 use App\Modules\Order\Application\Discounts\ToolsDiscount;
 use App\Modules\Order\Domain\Item;
 use App\Modules\Order\Domain\Order;
+use App\Modules\Product\Application\FindProductById\FindProductByIdQuery;
+use App\Modules\Product\Application\ProductResponseConverter;
 use App\Modules\Product\Domain\Product;
-use App\Modules\Product\Domain\ProductRepository;
-use App\Modules\Shared\Domain\ProductId;
+use App\Modules\Shared\Domain\Bus\Query\QueryBus;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class ToolsDiscountTest extends TestCase
 {
-
-    private MockObject|ProductRepository $productRepository;
+    private MockObject|QueryBus $queryBus;
 
     public function setUp(): void
     {
-        $this->productRepository = $this->createMock(ProductRepository::class);
+        $this->queryBus = $this->createMock(QueryBus::class);
     }
 
     public function testItShouldApplyDiscount(): void
@@ -27,15 +27,17 @@ class ToolsDiscountTest extends TestCase
         $tool2 = Product::create('B', 'toolB', 1, 200.00);
         $product3 = Product::create('C', 'productC', 4, 500.00);
 
-        $this->productRepository->expects($this->any())
-            ->method('find')
-            ->willReturnCallback(function (ProductId $key) use ($tool1, $tool2, $product3) {
-                return match ($key->value()) {
-                    'A' => $tool1,
-                    'B' => $tool2,
-                    'C' => $product3
-                };
-            });
+        $tool1Response = (new ProductResponseConverter)($tool1);
+        $tool2Response = (new ProductResponseConverter)($tool2);
+        $product3Response = (new ProductResponseConverter)($product3);
+
+        $this->queryBus->expects($this->exactly(3))->method('ask')->willReturnCallback(function (FindProductByIdQuery $query) use ($tool1Response, $tool2Response, $product3Response) {
+            return match ($query->productId()) {
+                'A' => $tool1Response,
+                'B' => $tool2Response,
+                'C' => $product3Response
+            };
+        });
 
         $order = Order::create(
             id: 1,
@@ -50,7 +52,7 @@ class ToolsDiscountTest extends TestCase
 
         $expectedTotal = 1280.00;
 
-        $discount = new ToolsDiscount($this->productRepository);
+        $discount = new ToolsDiscount($this->queryBus);
         $discount->apply($order);
         $this->assertEquals($expectedTotal, $order->total()->value());
         $this->assertIsArray($order->appliedDiscounts()->items());
@@ -65,15 +67,17 @@ class ToolsDiscountTest extends TestCase
         $product2 = Product::create('D', 'productC', 2, 200.00);
         $product3 = Product::create('F', 'productF', 4, 500.00);
 
-        $this->productRepository->expects($this->any())
-            ->method('find')
-            ->willReturnCallback(function (ProductId $key) use ($tool1, $product2, $product3) {
-                return match ($key->value()) {
-                    'C' => $tool1,
-                    'D' => $product2,
-                    'F' => $product3
-                };
-            });
+        $tool1Response = (new ProductResponseConverter)($tool1);
+        $product2Response = (new ProductResponseConverter)($product2);
+        $product3Response = (new ProductResponseConverter)($product3);
+
+        $this->queryBus->expects($this->exactly(3))->method('ask')->willReturnCallback(function (FindProductByIdQuery $query) use ($tool1Response, $product2Response, $product3Response) {
+            return match ($query->productId()) {
+                'C' => $tool1Response,
+                'D' => $product2Response,
+                'F' => $product3Response
+            };
+        });
 
         $order = Order::create(
             id: 1,
@@ -88,7 +92,7 @@ class ToolsDiscountTest extends TestCase
 
         $expectedTotal = 1300.00;
 
-        $discount = new ToolsDiscount($this->productRepository);
+        $discount = new ToolsDiscount($this->queryBus);
         $discount->apply($order);
         $this->assertEquals($expectedTotal, $order->total()->value());
         $this->assertEmpty($order->appliedDiscounts()->items());

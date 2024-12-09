@@ -11,7 +11,7 @@ use App\Modules\Shared\Domain\ProductId;
 
 class InMemoryProductRepository implements ProductRepository
 {
-    private const PRODUCTS = [
+    private const array PRODUCTS = [
         'A101' => [
             'id' => 'A101',
             'description' => 'Screwdriver',
@@ -44,6 +44,9 @@ class InMemoryProductRepository implements ProductRepository
         ],
     ];
 
+    /**
+     * @throws ProductNotExists
+     */
     public function find(ProductId $productId): Product
     {
         if (!isset(self::PRODUCTS[$productId->value()])) {

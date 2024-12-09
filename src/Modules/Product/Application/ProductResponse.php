@@ -5,20 +5,20 @@ namespace App\Modules\Product\Application;
 use App\Modules\Product\Domain\Product;
 use App\Modules\Shared\Domain\Bus\Query\Response;
 
-class ProductResponse implements Response
+readonly class ProductResponse implements Response
 {
     public function __construct(
-        private readonly string $id,
-        private readonly string $description,
-        private readonly int    $category,
-        private readonly float  $price,
+        private string $id,
+        private string $description,
+        private int    $category,
+        private float  $price,
     )
     {
     }
 
     public static function fromProduct(
         Product $product
-    ): OrderResponse
+    ): ProductResponse
     {
         return new self(
             $product->id()->value(),
@@ -36,5 +36,14 @@ class ProductResponse implements Response
             'category' => $this->category,
             'price' => $this->price,
         ];
+    }
+    public function category(): int
+    {
+        return $this->category;
+    }
+
+    public function price(): int
+    {
+        return $this->price;
     }
 }

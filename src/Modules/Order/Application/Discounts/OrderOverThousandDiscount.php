@@ -7,7 +7,7 @@ use App\Modules\Order\Domain\OrderTotal;
 
 class OrderOverThousandDiscount extends OrderDiscount
 {
-    const DESCRIPTION = 'A customer who has already bought for over € 1000, gets a discount of 10% on the whole order.';
+    const string DESCRIPTION = 'A customer who has already bought for over € 1000, gets a discount of 10% on the whole order.';
 
     public function apply(Order $order): void
     {

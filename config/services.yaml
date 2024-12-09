@@ -38,14 +38,16 @@ services:
 
     App\Modules\Order\Application\Discounts\OrderOverThousandDiscount:
     App\Modules\Order\Application\Discounts\SwitchesDiscount:
+        arguments:
+            $queryBus: '@App\Modules\Shared\Infrastructure\Bus\Query\InMemoryQueryBus'
     App\Modules\Order\Application\Discounts\ToolsDiscount:
         arguments:
-            $productRepository: '@App\Modules\Product\Infrastructure\Persistence\InMemoryProductRepository'
+            $queryBus: '@App\Modules\Shared\Infrastructure\Bus\Query\InMemoryQueryBus'
 
-    OrderDiscountsApplier:
+    App\Modules\Order\Infrastructure\Discounts\OrderDiscountsApplier:
         class: App\Modules\Order\Infrastructure\Discounts\OrderDiscountsApplier
         arguments:
-            - [
+            $discounts: [
                 '@App\Modules\Order\Application\Discounts\OrderOverThousandDiscount',
                 '@App\Modules\Order\Application\Discounts\SwitchesDiscount',
                 '@App\Modules\Order\Application\Discounts\ToolsDiscount'
@@ -53,5 +55,4 @@ services:
         
     App\Modules\Order\UI\Controller\DiscountsController:
         arguments:
-#            $bus: '@App\Modules\Shared\Infrastructure\Bus\Command\InMemoryCommandBus'
-            $discountsApplier: '@OrderDiscountsApplier'
+            $bus: '@App\Modules\Shared\Infrastructure\Bus\Command\InMemoryCommandBus'
