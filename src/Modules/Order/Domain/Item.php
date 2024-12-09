@@ -6,13 +6,13 @@ namespace App\Modules\Order\Domain;
 use App\Modules\Shared\Domain\ProductId;
 use App\Modules\Shared\Domain\ProductPrice;
 
-class Item
+readonly class Item
 {
     private function __construct(
-        private readonly ProductId    $productId,
-        private readonly ItemQuantity $quantity,
-        private readonly ProductPrice $unitPrice,
-        private readonly ItemsTotal   $total,
+        private ProductId    $productId,
+        private ItemQuantity $quantity,
+        private ProductPrice $unitPrice,
+        private ItemsTotal   $total,
     )
     {
     }

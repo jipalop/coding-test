@@ -18,7 +18,7 @@ class ProductResponse implements Response
 
     public static function fromProduct(
         Product $product
-    ): ProductResponse
+    ): OrderResponse
     {
         return new self(
             $product->id()->value(),

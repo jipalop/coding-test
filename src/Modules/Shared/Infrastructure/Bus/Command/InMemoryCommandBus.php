@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Shared\Infrastructure\Bus\Command;
 
-
+use App\Modules\Shared\Domain\Bus\Command\CommandBus;
 use App\Modules\Shared\Infrastructure\Bus\HandlerBuilder;
-use App\Shared\Domain\Bus\Command\Command;
-use App\Shared\Domain\Bus\Command\CommandBus;
+
 use InvalidArgumentException;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
@@ -15,6 +14,7 @@ use Symfony\Component\Messenger\Handler\HandlersLocator;
 use Symfony\Component\Messenger\MessageBus;
 use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
 use Throwable;
+use \App\Modules\Shared\Domain\Bus\Command\Command;
 
 final class InMemoryCommandBus implements CommandBus
 {

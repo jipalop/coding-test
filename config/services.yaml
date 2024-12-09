@@ -29,10 +29,10 @@ services:
         App\Modules\Shared\Domain\Bus\Query\QueryHandler:
             tags: [ 'internal.query_handler' ]
 
-    CommandBus:
+    App\Modules\Shared\Infrastructure\Bus\Command\InMemoryCommandBus:
         class: App\Modules\Shared\Infrastructure\Bus\Command\InMemoryCommandBus
         arguments: [ !tagged internal.command_handler ]
-    QueryBus:
+    App\Modules\Shared\Infrastructure\Bus\Query\InMemoryQueryBus:
         class: App\Modules\Shared\Infrastructure\Bus\Query\InMemoryQueryBus
         arguments: [ !tagged internal.query_handler ]
 
@@ -40,7 +40,7 @@ services:
     App\Modules\Order\Application\Discounts\SwitchesDiscount:
     App\Modules\Order\Application\Discounts\ToolsDiscount:
         arguments:
-            - '@App\Modules\Product\Infrastructure\Persistence\'
+            $productRepository: '@App\Modules\Product\Infrastructure\Persistence\InMemoryProductRepository'
 
     OrderDiscountsApplier:
         class: App\Modules\Order\Infrastructure\Discounts\OrderDiscountsApplier
@@ -50,3 +50,8 @@ services:
                 '@App\Modules\Order\Application\Discounts\SwitchesDiscount',
                 '@App\Modules\Order\Application\Discounts\ToolsDiscount'
             ]
+        
+    App\Modules\Order\UI\Controller\DiscountsController:
+        arguments:
+#            $bus: '@App\Modules\Shared\Infrastructure\Bus\Command\InMemoryCommandBus'
+            $discountsApplier: '@OrderDiscountsApplier'

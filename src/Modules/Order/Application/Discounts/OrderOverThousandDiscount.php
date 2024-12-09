@@ -11,7 +11,7 @@ class OrderOverThousandDiscount extends OrderDiscount
 
     public function apply(Order $order): void
     {
-        if ($order->total() > 1000) {
+        if ($order->total()->value() > 1000) {
             $total = $order->total()->value();
             $total = ($total * 0.1);
             $order->setTotal(new OrderTotal($total));

@@ -9,13 +9,13 @@ use App\Modules\Product\Domain\Product;
 
 class ProductResponseConverter
 {
-    public function __invoke(Product $product): ProductResponse
+    public function __invoke(Product $product): OrderResponse
     {
         return $this->toResponse($product);
     }
 
-    private function toResponse(Product $product): ProductResponse
+    private function toResponse(Product $product): OrderResponse
     {
-        return ProductResponse::fromProduct($product);
+        return OrderResponse::fromProduct($product);
     }
 }
