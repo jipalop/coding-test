@@ -13,8 +13,8 @@ class OrderOverThousandDiscount extends OrderDiscount
     {
         if ($order->total()->value() > 1000) {
             $total = $order->total()->value();
-            $total = ($total * 0.1);
-            $order->setTotal(new OrderTotal($total));
+            $total = $total - ($total * 0.1);
+            $order->setTotal(new OrderTotal(round($total, 2, PHP_ROUND_HALF_DOWN)));
             $order->appliedDiscounts()->addDiscount($this);
         }
     }

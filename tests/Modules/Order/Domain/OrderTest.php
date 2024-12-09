@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Modules\Order\Test;
+namespace App\Tests\Modules\Order\Domain;
 
 use App\Modules\Order\Domain\Item;
 use App\Modules\Order\Domain\Order;

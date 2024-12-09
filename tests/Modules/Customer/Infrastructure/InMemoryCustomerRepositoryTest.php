@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Customer\Test;
+namespace App\Tests\Modules\Customer\Infrastructure;
 
 use App\Modules\Customer\Domain\Customer;
 use App\Modules\Customer\Domain\CustomerNotExists;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Product\Test;
+namespace App\Tests\Modules\Product\Infrastructure;
 
 use App\Modules\Product\Domain\Product;
 use App\Modules\Product\Domain\ProductNotExists;

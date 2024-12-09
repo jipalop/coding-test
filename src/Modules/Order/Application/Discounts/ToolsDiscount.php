@@ -9,7 +9,8 @@ use App\Modules\Product\Domain\ProductRepository;
 
 class ToolsDiscount extends OrderDiscount
 {
-    const DESCRIPTION = 'If you buy two or more products of category Tools (id 1), you get a 20% discount on the cheapest product.';
+    public const string DESCRIPTION = 'If you buy two or more products of category Tools (id 1), you get a 20% discount on the cheapest product.';
+    private const int TOOLS_CATEGORY = 1;
 
     public function __construct(private readonly ProductRepository $productRepository)
     {
@@ -22,7 +23,7 @@ class ToolsDiscount extends OrderDiscount
         /** @var Item $item */
         foreach ($order->items()->items() as $item) {
             $product = $this->productRepository->find($item->productId());
-            if ($product->category()->value() == 2) {
+            if ($product->category()->value() == self::TOOLS_CATEGORY) {
                 $tools++;
                 if ($cheapestToolPrice == null || $cheapestToolPrice > $product->price()->value()) {
                     $cheapestToolPrice = $product->price();
@@ -30,7 +31,7 @@ class ToolsDiscount extends OrderDiscount
             }
         }
 
-        if ($cheapestToolPrice != null && $tools > 2) {
+        if ($cheapestToolPrice != null && $tools >= 2) {
             $total = $order->total()->value();
             $total = ($total - ($cheapestToolPrice->value() * 0.2));
             $order->setTotal(new OrderTotal($total));
