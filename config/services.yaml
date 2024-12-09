@@ -22,3 +22,31 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    _instanceof:
+        App\Modules\Shared\Domain\Bus\Command\CommandHandler:
+            tags: [ 'internal.command_handler' ]
+        App\Modules\Shared\Domain\Bus\Query\QueryHandler:
+            tags: [ 'internal.query_handler' ]
+
+    CommandBus:
+        class: App\Modules\Shared\Infrastructure\Bus\Command\InMemoryCommandBus
+        arguments: [ !tagged internal.command_handler ]
+    QueryBus:
+        class: App\Modules\Shared\Infrastructure\Bus\Query\InMemoryQueryBus
+        arguments: [ !tagged internal.query_handler ]
+
+    App\Modules\Order\Application\Discounts\OrderOverThousandDiscount:
+    App\Modules\Order\Application\Discounts\SwitchesDiscount:
+    App\Modules\Order\Application\Discounts\ToolsDiscount:
+        arguments:
+            - '@App\Modules\Product\Infrastructure\Persistence\'
+
+    OrderDiscountsApplier:
+        class: App\Modules\Order\Infrastructure\Discounts\OrderDiscountsApplier
+        arguments:
+            - [
+                '@App\Modules\Order\Application\Discounts\OrderOverThousandDiscount',
+                '@App\Modules\Order\Application\Discounts\SwitchesDiscount',
+                '@App\Modules\Order\Application\Discounts\ToolsDiscount'
+            ]

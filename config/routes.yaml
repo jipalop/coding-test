@@ -1,5 +1,4 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
+app_discounts:
+    path: /discounts
+    controller: App\Modules\Order\UI\Controller\DiscountsController::apply
+    methods: POST

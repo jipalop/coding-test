@@ -72,6 +72,9 @@
       <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
       <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
       <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/vendor/phplang/scope-exit" />
+      <path value="$PROJECT_DIR$/vendor/swaggest/json-schema" />
+      <path value="$PROJECT_DIR$/vendor/swaggest/json-diff" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3">
